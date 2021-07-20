@@ -129,15 +129,15 @@
  * @기능 promise를 더 쉽게 만들고 코드의 가독성까지 좋게 만들어준다.
  */
 
-async function f() {
+// async function f() {
 
-  let promise = new Promise((resolve, reject) => {
-    setTimeout(() => resolve("완료!"), 1000)
-  });
+//   let promise = new Promise((resolve, reject) => {
+//     setTimeout(() => resolve("완료!"), 1000)
+//   });
 
-  let result = await promise; // 프라미스가 이행될 때까지 기다림 (*)
+//   let result = await promise; // 프라미스가 이행될 때까지 기다림 (*)
 
-  console.log(result); // "완료!"
-}
+//   console.log(result); // "완료!"
+// }
 
-f();
+// f();
