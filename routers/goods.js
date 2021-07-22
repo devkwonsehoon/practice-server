@@ -34,7 +34,7 @@ router.post('/goods', async (req, res) => {
 });
 
 
-// 장바구니
+// 장바구니 담기
 router.post("/goods/:goodsId/cart", async (req, res) => {
   const { goodsId } = req.params;
   const { quantity } = req.body;
@@ -47,6 +47,28 @@ router.post("/goods/:goodsId/cart", async (req, res) => {
     await Cart.create({ goodsId: goodsId, quantity: quantity });
   }
   res.send({ result: "success" });
+});
+
+// 장바구니 내역 가져오기
+router.get("/cart", async (req, res) => {
+  const cart = await Cart.find({});
+  const goodsId = cart.map(cart => cart.goodsId);
+
+  goodsInCart = await Goods.find()
+    .where("goodsId")
+    .in(goodsId);
+
+  concatCart = cart.map(c => {
+    for (let i = 0; i < goodsInCart.length; i++) {
+      if (goodsInCart[i].goodsId == c.goodsId) {
+        return { quantity: c.quantity, goods: goodsInCart[i] };
+      }
+    }
+  });
+
+  res.json({
+    cart: concatCart
+  });
 });
 
 module.exports = router;
