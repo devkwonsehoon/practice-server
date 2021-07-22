@@ -5,6 +5,10 @@ const port = 3000
 const connect = require("./schemas");
 connect();
 
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+app.use(express.static("public"));
+
 // const goodsRouter = require("./routes/goods");
 // const userRouter = require("./routes/user");
 
@@ -13,10 +17,6 @@ app.use("/api", [goodsRouter]);
 
 // app.use('/goods', goodsRouter);
 // app.use('/user', userRouter);
-
-app.use(express.urlencoded({extended: false}));
-app.use(express.json());
-app.use(express.static("public"));
 
 app.use((req, res, next) => {
   next();
