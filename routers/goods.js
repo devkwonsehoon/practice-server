@@ -49,6 +49,20 @@ router.post("/goods/:goodsId/cart", async (req, res) => {
   res.send({ result: "success" });
 });
 
+// 장바구니 삭제
+router.delete("/goods/:goodsId/cart", async (req, res) => {
+  const { goodsId } = req.params;
+  
+  const isGoodsInCart = await Cart.find({ goodsId });
+  if (isGoodsInCart.length > 0) {
+    await Cart.deleteOne({ goodsId });
+  }
+
+  res.send({
+    result : "success"
+  });
+})
+
 // 장바구니 내역 가져오기
 router.get("/cart", async (req, res) => {
   const cart = await Cart.find({});
@@ -70,5 +84,20 @@ router.get("/cart", async (req, res) => {
     cart: concatCart
   });
 });
+
+// 장바구니 수정
+router.patch("/goods/:goodsId/cart", async (req, res) => {
+  const { goodsId } = req.params;
+  const { quantity } = req.body;
+
+  const isGoodsInCart = await Cart.find({goodsId});
+  if (isGoodsInCart.length > 0) {
+    await Cart.updateOne({ goodsId }, { $set : { quantity }});
+  } 
+
+  res.send({
+    result : "success"
+  })
+})
 
 module.exports = router;
